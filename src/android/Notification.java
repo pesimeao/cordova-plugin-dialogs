@@ -141,7 +141,8 @@ public class Notification extends CordovaPlugin {
 
                 AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity());
                 dlg.setMessage(message);
-                dlg.setTitle(title);
+                if (!title.isEmpty())
+                    dlg.setTitle(title);
                 dlg.setCancelable(true);
                 dlg.setPositiveButton(buttonLabel,
                         new AlertDialog.OnClickListener() {
@@ -183,7 +184,8 @@ public class Notification extends CordovaPlugin {
             public void run() {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity());
                 dlg.setMessage(message);
-                dlg.setTitle(title);
+                if (!title.isEmpty())
+                    dlg.setTitle(title);
                 dlg.setCancelable(true);
 
                 // First button
@@ -261,7 +263,8 @@ public class Notification extends CordovaPlugin {
             public void run() {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity());
                 dlg.setMessage(message);
-                dlg.setTitle(title);
+                if (!title.isEmpty())
+                    dlg.setTitle(title);
                 dlg.setCancelable(true);
                 
                 dlg.setView(promptInput);
