@@ -33,5 +33,6 @@
 
 @interface CDVAlertView : UIAlertView {}
 @property (nonatomic, copy) NSString* callbackId;
+@property int count;
 
 @end
