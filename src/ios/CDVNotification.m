@@ -36,7 +36,7 @@
  *  callbackId    The commmand callback id.
  *  dialogType    The type of alert view [alert | prompt].
  */
-- (void)showDialogWithMessage:(NSString*)message title:(NSString*)title buttons:(NSArray*)buttons defaultText:(NSString*)defaultText callbackId:(NSString*)callbackId dialogType:(NSString*)dialogType
+- (void)showDialogWithMessage:(NSString*)message title:(NSString*)title buttons:(NSArray*)buttons defaultText:(NSString*)defaultText callbackId:(NSString*)callbackId dialogType:(NSString*)dialogType placehoverText:(NSString*)placehoverText
 {
     CDVAlertView* alertView = [[CDVAlertView alloc]
         initWithTitle:title
@@ -57,7 +57,12 @@
     if ([dialogType isEqualToString:DIALOG_TYPE_PROMPT]) {
         alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         UITextField* textField = [alertView textFieldAtIndex:0];
-        textField.text = defaultText;
+        if (defaultText.length > 0) {
+            textField.text = defaultText;
+        }
+        if (placehoverText.length > 0) {
+            textField.placeholder = placehoverText;
+        }
     }
 
     [alertView show];
@@ -70,7 +75,7 @@
     NSString* title = [command argumentAtIndex:1];
     NSString* buttons = [command argumentAtIndex:2];
 
-    [self showDialogWithMessage:message title:title buttons:@[buttons] defaultText:nil callbackId:callbackId dialogType:DIALOG_TYPE_ALERT];
+    [self showDialogWithMessage:message title:title buttons:@[buttons] defaultText:nil callbackId:callbackId dialogType:DIALOG_TYPE_ALERT placehoverText:@""];
 }
 
 - (void)confirm:(CDVInvokedUrlCommand*)command
@@ -80,7 +85,7 @@
     NSString* title = [command argumentAtIndex:1];
     NSArray* buttons = [command argumentAtIndex:2];
 
-    [self showDialogWithMessage:message title:title buttons:buttons defaultText:nil callbackId:callbackId dialogType:DIALOG_TYPE_ALERT];
+    [self showDialogWithMessage:message title:title buttons:buttons defaultText:nil callbackId:callbackId dialogType:DIALOG_TYPE_ALERT placehoverText:@""];
 }
 
 - (void)prompt:(CDVInvokedUrlCommand*)command
@@ -90,8 +95,9 @@
     NSString* title = [command argumentAtIndex:1];
     NSArray* buttons = [command argumentAtIndex:2];
     NSString* defaultText = [command argumentAtIndex:3];
+    NSString* placehoverText = [command argumentAtIndex:4];
 
-    [self showDialogWithMessage:message title:title buttons:buttons defaultText:defaultText callbackId:callbackId dialogType:DIALOG_TYPE_PROMPT];
+    [self showDialogWithMessage:message title:title buttons:buttons defaultText:defaultText callbackId:callbackId dialogType:DIALOG_TYPE_PROMPT placehoverText:placehoverText];
 }
 
 /**
